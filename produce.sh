@@ -9,5 +9,5 @@ sudo docker run \
   --net=host \
   --rm \
   confluentinc/cp-kafka \
-  bash -c "( x=1; while [[ \$x -le ${msg_count} ]]; do echo \"Message: \$x of ${msg_count}\" ; x=\$(( \$x + 1 )) ; sleep 1; done ) | kafka-console-producer --request-required-acks 1 --broker-list localhost:29092 --topic node_test"
+  bash -c "( x=1; while [[ \$x -le ${msg_count} ]]; do echo \"key1:{\\\"upd\\\": \\\"\$( date +'%Y%m%d%H%M%S' )\\\", \\\"val\\\": \\\"\$x of ${msg_count}\\\"}\" ; x=\$(( \$x + 1 )) ; sleep 1; done ) | kafka-console-producer --request-required-acks 1 --broker-list localhost:29092 --topic node_test --property \"parse.key=true\" --property \"key.separator=:\"" 
 
